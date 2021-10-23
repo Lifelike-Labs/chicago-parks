@@ -13,6 +13,7 @@ const Home: NextPage = () => {
   const [selectedItem, setSelectedItem] = useState<Feature | null>(null)
 
   const selectItem = (item: Feature | null) => {
+    setDrawerOpen(true)
     setSelectedItem(item)
   }
 
@@ -25,6 +26,7 @@ const Home: NextPage = () => {
             drawerWidth={drawerWidth}
             drawerOpen={drawerOpen}
             setDrawerOpen={setDrawerOpen}
+            selectedItem={selectedItem}
           />
         </Box>
         <Box flexGrow={1} sx={{ height: '100vh', width: '100vw' }}>
