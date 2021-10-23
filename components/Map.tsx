@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import ReactMapGL from 'react-map-gl'
+import ReactMapGL, { Layer, Source } from 'react-map-gl'
 
 export default function Map() {
   const [viewport, setViewport] = useState({})
@@ -11,6 +11,10 @@ export default function Map() {
       width="100%"
       height="100%"
       onViewportChange={setViewport}
-    />
+    >
+      <Source id="park-data" type="geojson" data="/chicago-parks.geojson">
+        <Layer type="circle" paint={{ 'circle-radius': 10, 'circle-color': '#ff0000' }} />
+      </Source>
+    </ReactMapGL>
   )
 }
