@@ -50,7 +50,7 @@ export default function MapDrawer({ drawerWidth, drawerOpen, setDrawerOpen, sele
             </Box>
           )}
           {!selectedItem && (
-            <Typography variant="h6" color="textSecondary" sx={{ mt: 2 }}>
+            <Typography variant="h6" color="textSecondary" sx={{ mt: 2, mx: 2 }}>
               Select a Chicago park on the map to see info about it!
             </Typography>
           )}
