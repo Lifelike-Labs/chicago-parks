@@ -1,6 +1,6 @@
 import { Feature } from 'geojson'
 import { useEffect, useState } from 'react'
-import ReactMapGL, { WebMercatorViewport } from 'react-map-gl'
+import ReactMapGL, { FlyToInterpolator, WebMercatorViewport } from 'react-map-gl'
 import MapItem from './MapItem'
 
 const getBounds = (features: Array<Feature>) => {
@@ -27,29 +27,33 @@ const getBounds = (features: Array<Feature>) => {
 }
 
 type Props = {
+  geojson: GeoJSON.FeatureCollection | null
   selectItem: (item: Feature | null) => void
   selectedItem: Feature | null
 }
 
-export default function Map({ selectItem, selectedItem }: Props) {
+export default function Map({ geojson, selectItem, selectedItem }: Props) {
   const [viewport, setViewport] = useState({})
-  const [geojson, setGeojson] = useState<GeoJSON.FeatureCollection | null>(null)
 
-  useEffect(
-    () => {
-      getGeojson()
-    },
-    // eslint-disable-next-line
-    [],
-  )
+  useEffect(() => {
+    if (geojson) {
+      const bounds = getBounds(geojson.features)
+      setViewport({ ...viewport, ...bounds })
+    }
+  }, [geojson])
 
-  const getGeojson = async () => {
-    const res = await fetch('/api/geojson')
-    const json = await res.json()
-    setGeojson(json)
-    const bounds = getBounds(json.features)
-    setViewport({ ...viewport, ...bounds })
-  }
+  useEffect(() => {
+    if (selectedItem) {
+      const geometry: any = selectedItem.geometry
+      setViewport({
+        ...viewport,
+        longitude: geometry.coordinates[0],
+        latitude: geometry.coordinates[1],
+        transitionDuration: 1000,
+        transitionInterpolator: new FlyToInterpolator(),
+      })
+    }
+  }, [selectItem])
 
   return (
     <ReactMapGL
