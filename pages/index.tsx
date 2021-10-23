@@ -1,14 +1,21 @@
-import { Box } from "@mui/system";
-import type { NextPage } from "next";
-import Header from "../components/common/Header";
-import Map from "../components/Map";
-import { useState } from "react";
-import MapDrawer from "../components/MapDrawer";
+import { Box } from '@mui/system'
+import { Feature } from 'geojson'
+import type { NextPage } from 'next'
+import { useState } from 'react'
+import Header from '../components/common/Header'
+import Map from '../components/Map'
+import MapDrawer from '../components/MapDrawer'
 
-const drawerWidth = 300;
+const drawerWidth = 300
 
 const Home: NextPage = () => {
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [selectedItem, setSelectedItem] = useState<Feature | null>(null)
+
+  const selectItem = (item: Feature | null) => {
+    setSelectedItem(item)
+  }
+
   return (
     <>
       <Header setDrawerOpen={setDrawerOpen} />
@@ -20,12 +27,12 @@ const Home: NextPage = () => {
             setDrawerOpen={setDrawerOpen}
           />
         </Box>
-        <Box flexGrow={1} sx={{ height: "100vh", width: "100vw" }}>
-          <Map />
+        <Box flexGrow={1} sx={{ height: '100vh', width: '100vw' }}>
+          <Map selectItem={selectItem} selectedItem={selectedItem} />
         </Box>
       </Box>
     </>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

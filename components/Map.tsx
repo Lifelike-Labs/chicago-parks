@@ -1,6 +1,7 @@
 import { Feature } from 'geojson'
 import { useEffect, useState } from 'react'
-import ReactMapGL, { Layer, Source, WebMercatorViewport } from 'react-map-gl'
+import ReactMapGL, { WebMercatorViewport } from 'react-map-gl'
+import MapItem from './MapItem'
 
 const getBounds = (features: Array<Feature>) => {
   // Calculate corner values of bounds
@@ -25,9 +26,14 @@ const getBounds = (features: Array<Feature>) => {
   return { longitude, latitude, zoom }
 }
 
-export default function Map() {
+type Props = {
+  selectItem: (item: Feature | null) => void
+  selectedItem: Feature | null
+}
+
+export default function Map({ selectItem, selectedItem }: Props) {
   const [viewport, setViewport] = useState({})
-  const [geojson, setGeojson] = useState(null)
+  const [geojson, setGeojson] = useState<GeoJSON.FeatureCollection | null>(null)
 
   useEffect(
     () => {
@@ -52,12 +58,17 @@ export default function Map() {
       width="100%"
       height="100%"
       onViewportChange={setViewport}
+      onClick={() => selectItem(null)}
     >
-      {geojson && (
-        <Source id="park-data" type="geojson" data={geojson}>
-          <Layer type="circle" paint={{ 'circle-radius': 10, 'circle-color': '#ff0000' }} />
-        </Source>
-      )}
+      {geojson &&
+        geojson.features.map((item: Feature, index: number) => (
+          <MapItem
+            key={index}
+            item={item}
+            isSelected={item === selectedItem}
+            onClick={selectItem}
+          />
+        ))}
     </ReactMapGL>
   )
 }
