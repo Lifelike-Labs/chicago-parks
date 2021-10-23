@@ -5,8 +5,8 @@ import ReactMapGL, { Layer, Source, WebMercatorViewport } from 'react-map-gl'
 const getBounds = (features: Array<Feature>) => {
   // Calculate corner values of bounds
   // Can't figure out how to handle typing here...
-  const pointsLong: number[] = features.map((f) => f.geometry.coordinates[0])
-  const pointsLat: number[] = features.map((f) => f.geometry.coordinates[1])
+  const pointsLong: number[] = features.map((f: any) => f.geometry.coordinates[0])
+  const pointsLat: number[] = features.map((f: any) => f.geometry.coordinates[1])
   const minLong: number = Math.min(...pointsLong)
   const maxLong: number = Math.max(...pointsLong)
   const minLat: number = Math.min(...pointsLat)
