@@ -1,5 +1,29 @@
+import { Feature } from 'geojson'
 import { useEffect, useState } from 'react'
-import ReactMapGL, { Layer, Source } from 'react-map-gl'
+import ReactMapGL, { Layer, Source, WebMercatorViewport } from 'react-map-gl'
+
+const getBounds = (features: Array<Feature>) => {
+  // Calculate corner values of bounds
+  // Can't figure out how to handle typing here...
+  const pointsLong: number[] = features.map((f) => f.geometry.coordinates[0])
+  const pointsLat: number[] = features.map((f) => f.geometry.coordinates[1])
+  const minLong: number = Math.min(...pointsLong)
+  const maxLong: number = Math.max(...pointsLong)
+  const minLat: number = Math.min(...pointsLat)
+  const maxLat: number = Math.max(...pointsLat)
+  // Use WebMercatorViewport to get center longitude/latitude and zoom
+  const viewport = new WebMercatorViewport({ width: 800, height: 600 }).fitBounds(
+    [
+      [minLong, minLat],
+      [maxLong, maxLat],
+    ],
+    {
+      padding: 100,
+    },
+  )
+  const { longitude, latitude, zoom } = viewport
+  return { longitude, latitude, zoom }
+}
 
 export default function Map() {
   const [viewport, setViewport] = useState({})
@@ -17,6 +41,8 @@ export default function Map() {
     const res = await fetch('/chicago-parks.geojson')
     const json = await res.json()
     setGeojson(json)
+    const bounds = getBounds(json.features)
+    setViewport({ ...viewport, ...bounds })
   }
 
   return (
