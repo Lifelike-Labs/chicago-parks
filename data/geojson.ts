@@ -4,7 +4,8 @@ const data: object = {
       "type": "Feature",
       "properties": {
         "title": "Lincoln Park",
-        "description": "A northside park that is home to the Lincoln Park Zoo"
+        "description": "A northside park that is home to the Lincoln Park Zoo",
+        "image": "/images/lincoln.jpg"
       },
       "geometry": {
         "coordinates": [-87.637596, 41.940403],
@@ -15,7 +16,8 @@ const data: object = {
       "type": "Feature",
       "properties": {
         "title": "Burnham Park",
-        "description": "A lakefront park on Chicago's south side"
+        "description": "A lakefront park on Chicago's south side",
+        "image": "/images/burnham.jpg"
       },
       "geometry": {
         "coordinates": [-87.603735, 41.829985],
@@ -26,7 +28,8 @@ const data: object = {
       "type": "Feature",
       "properties": {
         "title": "Millennium Park",
-        "description": "A downtown park known for its art installations and unique architecture"
+        "description": "A downtown park known for its art installations and unique architecture",
+        "image": "/images/millennium.jpg"
       },
       "geometry": {
         "coordinates": [-87.622554, 41.882534],
@@ -37,7 +40,8 @@ const data: object = {
       "type": "Feature",
       "properties": {
         "title": "Grant Park",
-        "description": "A downtown park that is the site of many of Chicago's favorite festivals and events"
+        "description": "A downtown park that is the site of many of Chicago's favorite festivals and events",
+        "image": "/images/grant.jpg"
       },
       "geometry": {
         "coordinates": [-87.619185, 41.876367],
@@ -48,7 +52,8 @@ const data: object = {
       "type": "Feature",
       "properties": {
         "title": "Humboldt Park",
-        "description": "A large park on Chicago's northwest side"
+        "description": "A large park on Chicago's northwest side",
+        "image": "/images/humboldt.jpg"
       },
       "geometry": {
         "coordinates": [-87.70199, 41.905423],
