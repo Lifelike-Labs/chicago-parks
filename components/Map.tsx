@@ -44,7 +44,7 @@ export default function Map({ selectItem, selectedItem }: Props) {
   )
 
   const getGeojson = async () => {
-    const res = await fetch('/chicago-parks.geojson')
+    const res = await fetch('/api/geojson')
     const json = await res.json()
     setGeojson(json)
     const bounds = getBounds(json.features)
