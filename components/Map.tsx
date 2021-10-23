@@ -1,8 +1,23 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ReactMapGL, { Layer, Source } from 'react-map-gl'
 
 export default function Map() {
   const [viewport, setViewport] = useState({})
+  const [geojson, setGeojson] = useState(null)
+
+  useEffect(
+    () => {
+      getGeojson()
+    },
+    // eslint-disable-next-line
+    [],
+  )
+
+  const getGeojson = async () => {
+    const res = await fetch('/chicago-parks.geojson')
+    const json = await res.json()
+    setGeojson(json)
+  }
 
   return (
     <ReactMapGL
@@ -12,9 +27,11 @@ export default function Map() {
       height="100%"
       onViewportChange={setViewport}
     >
-      <Source id="park-data" type="geojson" data="/chicago-parks.geojson">
-        <Layer type="circle" paint={{ 'circle-radius': 10, 'circle-color': '#ff0000' }} />
-      </Source>
+      {geojson && (
+        <Source id="park-data" type="geojson" data={geojson}>
+          <Layer type="circle" paint={{ 'circle-radius': 10, 'circle-color': '#ff0000' }} />
+        </Source>
+      )}
     </ReactMapGL>
   )
 }
