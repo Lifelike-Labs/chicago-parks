@@ -1,3 +1,4 @@
+import * as d3 from 'd3-ease'
 import { Feature } from 'geojson'
 import { useEffect, useState } from 'react'
 import ReactMapGL, { FlyToInterpolator, WebMercatorViewport } from 'react-map-gl'
@@ -49,8 +50,9 @@ export default function Map({ geojson, selectItem, selectedItem }: Props) {
         ...viewport,
         longitude: geometry.coordinates[0],
         latitude: geometry.coordinates[1],
-        transitionDuration: 1000,
+        transitionDuration: 500,
         transitionInterpolator: new FlyToInterpolator(),
+        transitionEasing: d3.easeCubic,
       })
     }
   }, [selectItem])
