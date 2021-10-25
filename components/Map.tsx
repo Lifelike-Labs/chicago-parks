@@ -41,6 +41,7 @@ export default function Map({ geojson, selectItem, selectedItem }: Props) {
       const bounds = getBounds(geojson.features)
       setViewport({ ...viewport, ...bounds })
     }
+    // eslint-disable-next-line
   }, [geojson])
 
   useEffect(() => {
@@ -55,6 +56,7 @@ export default function Map({ geojson, selectItem, selectedItem }: Props) {
         transitionEasing: d3.easeCubic,
       })
     }
+    // eslint-disable-next-line
   }, [selectItem])
 
   return (
